@@ -1,0 +1,9 @@
+{
+  "name": "azure-ad-b2c-implicit-flow",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
