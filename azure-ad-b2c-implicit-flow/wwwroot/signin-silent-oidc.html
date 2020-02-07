@@ -25,9 +25,7 @@
             Oidc.Log.level = Oidc.Log.DEBUG;
             var mgr = new Oidc.UserManager(OIDC_CONFIG);
 
-            mgr.signinRedirectCallback().then(function() {
-                window.location.href = '/index.html';
-            });
+            mgr.signinSilentCallback();
         </script>
     </body>
 </html>
