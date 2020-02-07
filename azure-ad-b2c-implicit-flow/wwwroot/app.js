@@ -5,7 +5,8 @@ var OIDC_CONFIG = {
     authority: 'https://strangeloop.b2clogin.com/strangeloop.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1_signin_test',
     client_id: 'e299a18e-8081-450c-aa78-9e20051ef4fb',
     redirect_uri: `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/signin-oidc.html`,
-    post_logout_redirect_uri: `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}`,
+    silent_redirect_uri: `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/signin-silent-oidc.html`,
+    post_logout_redirect_uri: `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/signout-oidc.html`,
     automaticSilentRenew: true,
     filterProtocolClaims: true,
     loadUserInfo: false,
@@ -17,6 +18,18 @@ var OIDC_CONFIG = {
 };
 
 var mgr = new Oidc.UserManager(OIDC_CONFIG);
+
+mgr.events.addAccessTokenExpiring(function() {
+    log('access token expiring...');
+});
+
+mgr.events.addAccessTokenExpired(function() {
+    log('access token expired...');
+});
+
+mgr.events.addSilentRenewError(function() {
+    log('silent renew error...');
+});
 
 getUser().then(function(u) {
     updateDisplay(u);
